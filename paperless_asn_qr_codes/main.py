@@ -12,10 +12,10 @@ def render(c, x, y):
     barcode_value = f"ASN{startASN:0{digits}d}"
     startASN = startASN + 1
 
-    qr = QRCodeImage(barcode_value, size=y * 0.9)
-    qr.drawOn(c, 1 * mm, y * 0.05)
+    qr = QRCodeImage(barcode_value, border=0, size=y * 0.8)
+    qr.drawOn(c, 1 * mm, y * 0.1)
     c.setFont("Helvetica", 2 * mm)
-    c.drawString(y, (y - 2 * mm) / 2, barcode_value)
+    c.drawString(y + 1.5 * mm, (y - 2 * mm) / 2, barcode_value)
 
 
 def main():
