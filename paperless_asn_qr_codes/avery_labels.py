@@ -36,7 +36,7 @@ labelInfo: dict[str, LabelInfo] = {
         labels_vertical=22,
         label_size=(25.4 * mm, 9.52 * mm),
         gutter_size=(2.5 * mm, 2.5 * mm),
-        margin=(11.55 * mm, (8.73 - 2.5) * mm),
+        margin=(11.55 * mm, 8.73 * mm),
         radius=3,
         pagesize=LETTER,
     ),
@@ -112,8 +112,9 @@ class AveryLabel:
         self.size = data.label_size
         self.labelsep = (
             self.size[0] + data.gutter_size[0],
-            self.size[1] + data.gutter_size[1],
+            self.size[1],
         )
+        self.gutter = data.gutter_size[1]
         self.margins = data.margin
         self.topDown = True
         self.debug = debug
@@ -140,7 +141,7 @@ class AveryLabel:
 
         return (
             self.margins[0] + x * self.labelsep[0],
-            self.pagesize[1] - self.margins[1] - (y + 1) * self.labelsep[1],
+            self.pagesize[1] - self.margins[1] - y * self.gutter - (y + 1) * self.labelsep[1],
         )
 
     def advance(self):
