@@ -27,6 +27,7 @@ class LabelInfo:
     gutter_size: tuple[float, float]
     margin: tuple[float, float]
     pagesize: tuple[float, float]
+    radius: float
 
 
 labelInfo: dict[str, LabelInfo] = {
@@ -36,6 +37,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(25.4 * mm, 9.52 * mm),
         gutter_size=(2.5 * mm, 2.5 * mm),
         margin=(11.55 * mm, (8.73 - 2.5) * mm),
+        radius=3,
         pagesize=LETTER,
     ),
     "averyL4731": LabelInfo(
@@ -44,6 +46,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(25.4 * mm, 10 * mm),
         gutter_size=(2.5 * mm, 0),
         margin=(9 * mm, 13.5 * mm),
+        radius=4,
         pagesize=A4,
     ),
     # 2.6 x 1 address labels
@@ -53,6 +56,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(187, 72),
         gutter_size=(11, 0),
         margin=(14, 36),
+        radius=0,
         pagesize=LETTER,
     ),
     "avery5161": LabelInfo(
@@ -61,6 +65,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(288, 72),
         gutter_size=(0, 0),
         margin=(18, 36),
+        radius=0,
         pagesize=LETTER,
     ),
     # 4 x 2 address labels
@@ -70,6 +75,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(288, 144),
         gutter_size=(0, 0),
         margin=(18, 36),
+        radius=0,
         pagesize=LETTER,
     ),
     # 1.75 x 0.5 return address labels
@@ -79,6 +85,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(1.75 * inch, 0.5 * inch),
         gutter_size=(0.3 * inch, 0),
         margin=(0.3 * inch, 0.5 * inch),
+        radius=0,
         pagesize=LETTER,
     ),
     # 3.5 x 2 business cards
@@ -88,6 +95,7 @@ labelInfo: dict[str, LabelInfo] = {
         label_size=(252, 144),
         gutter_size=(0, 0),
         margin=(54, 36),
+        radius=0,
         pagesize=LETTER,
     ),
 }
@@ -109,6 +117,7 @@ class AveryLabel:
         self.margins = data.margin
         self.topDown = True
         self.debug = debug
+        self.radius = data.radius
         self.pagesize = data.pagesize
         self.position = 0
         self.__dict__.update(kwargs)
@@ -164,7 +173,7 @@ class AveryLabel:
             canv.translate(*self.topLeft())
             if self.debug:
                 canv.setLineWidth(0.25)
-                canv.rect(0, 0, self.size[0], self.size[1])
+                canv.roundRect(0, 0, self.size[0], self.size[1], radius=self.radius)
             if callable(thing):
                 thing(canv, self.size[0], self.size[1], *args)
             elif isinstance(thing, str):
@@ -179,7 +188,7 @@ class AveryLabel:
             canv.translate(*self.topLeft())
             if self.debug:
                 canv.setLineWidth(0.25)
-                canv.rect(0, 0, self.size[0], self.size[1])
+                canv.roundRect(0, 0, self.size[0], self.size[1], radius=self.radius)
             func(canv, self.size[0], self.size[1], chunk)
             canv.restoreState()
             self.advance()
