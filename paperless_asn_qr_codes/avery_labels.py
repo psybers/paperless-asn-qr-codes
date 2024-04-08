@@ -30,6 +30,14 @@ class LabelInfo:
 
 
 labelInfo: dict[str, LabelInfo] = {
+    "royalgreen1660": LabelInfo(
+        labels_horizontal=7,
+        labels_vertical=22,
+        label_size=(25.4 * mm, 9.52 * mm),
+        gutter_size=(2.5 * mm, 2.5 * mm),
+        margin=(11.55 * mm, (8.73 - 2.5) * mm),
+        pagesize=LETTER,
+    ),
     "averyL4731": LabelInfo(
         labels_horizontal=7,
         labels_vertical=27,
