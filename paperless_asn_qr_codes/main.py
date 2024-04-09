@@ -14,8 +14,8 @@ def render(c, x, y):
 
     qr = QRCodeImage(barcode_value, border=0, size=y * 0.8)
     qr.drawOn(c, 1 * mm, y * 0.1)
-    c.setFont("Helvetica", 2 * mm)
-    c.drawString(y + 1.5 * mm, (y - 2 * mm) / 2, barcode_value)
+    c.setFont("Helvetica", 2.5 * mm)
+    c.drawString(y * 0.8 + 1.7 * mm, (y - 2.5 * mm) / 2, barcode_value)
 
 
 def main():
